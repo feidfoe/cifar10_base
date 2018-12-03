@@ -19,4 +19,4 @@ Memory issue when evaluating.
 
 ## Reference
 
-Model files are the copy of [https://github.com/kuangliu/pytorch-cifar]
+Model files are the copies of [https://github.com/kuangliu/pytorch-cifar]
