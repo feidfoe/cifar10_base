@@ -3,7 +3,8 @@
 [Pytorch](http://pytorch.org) implementation for [CIFAR10](https://www.cs.toronto.edu/~kriz/cifar.html) classification.
 
 ## Accuracy
-
+| Models   |Acc  |
+|----------|-----|
 |VGG16     |.9387| 
 |resnet18  |.9525| 
 |resnet50  |.9540|  
