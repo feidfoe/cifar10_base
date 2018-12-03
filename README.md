@@ -14,6 +14,7 @@
 ## Issue
 
 Multi-gpu training is implemented, but not yet tested.
+
 Memory issue when evaluating.
 
 ## Reference
