@@ -44,6 +44,15 @@ class Trainer(object):
                 raise ValueError
             self.net = resnet.ResNet(block,n_layers,num_classes=self.option.n_class)
 
+        elif self.option.arch == 'preresnet':
+            from models import preresnet
+            if (self.option.depth-2)%6 == 0:
+                self.net = preresnet.PreResNet(depth=self.option.depth, num_classes=self.option.n_class)
+            else:
+                msg = "Depth should be 6n+2"
+                self.logger.info(msg)
+                raise ValueError
+
         elif self.option.arch == 'vgg':
             from models import vgg
             vgg_name = 'VGG%d'%self.option.depth
@@ -55,7 +64,7 @@ class Trainer(object):
                 raise ValueError
             
         else:
-            msg = "Unknown architecture: %s"%self.option.arch
+            msg = "Unknown architecture: %s. Should be one of ('resnet', 'preresnet', 'vgg')"%self.option.arch
             self.logger.info(msg)
             raise ValueError
 
