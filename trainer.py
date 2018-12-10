@@ -21,7 +21,7 @@ class Trainer(object):
 
 
     def _build_model(self):
-        if self.option.arch == 'resnet':
+        if self.option.arch=='resnet':
             from models import resnet
             if self.option.depth == 18 :
                 n_layers = [2,2,2,2]
@@ -44,14 +44,37 @@ class Trainer(object):
                 raise ValueError
             self.net = resnet.ResNet(block,n_layers,num_classes=self.option.n_class)
 
-        elif self.option.arch == 'preresnet':
-            from models import preresnet
-            if (self.option.depth-2)%6 == 0:
-                self.net = preresnet.PreResNet(depth=self.option.depth, num_classes=self.option.n_class)
+        elif self.option.arch=='preresnet':
+            from models import preact_resnet
+            if self.option.depth == 18 :
+                n_layers = [2,2,2,2]
+                block = preact_resnet.PreActBlock
+            elif self.option.depth == 34 :
+                n_layers = [3,4,6,3]
+                block = preact_resnet.PreActBlock
+            elif self.option.depth == 50 :
+                n_layers = [3,4,6,3]
+                block = preact_resnet.PreActBottleneck
+            elif self.option.depth == 101 :
+                n_layers = [3,4,23,3]
+                block = preact_resnet.PreActBottleneck
+            elif self.option.depth == 152 :
+                n_layers = [3,8,36,3]
+                block = preact_resnet.PreActBottleneck
             else:
-                msg = "Depth should be 6n+2"
+                msg = "Unknown depth for pre-resnet: %d. Should be one of (18, 34, 50, 101, 152)"%self.option.depth
                 self.logger.info(msg)
                 raise ValueError
+            self.net = preact_resnet.PreActResNet(block,n_layers,num_classes=self.option.n_class)
+
+        #elif self.option.arch == 'preresnet':
+        #    from models import preresnet
+        #    if (self.option.depth-2)%6 == 0:
+        #        self.net = preresnet.PreResNet(depth=self.option.depth, num_classes=self.option.n_class)
+        #    else:
+        #        msg = "Depth should be 6n+2"
+        #        self.logger.info(msg)
+        #        raise ValueError
 
         elif self.option.arch == 'vgg':
             from models import vgg
