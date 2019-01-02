@@ -18,6 +18,8 @@ Multi-gpu training is implemented, but not yet tested.
 
 Memory issue when evaluating.
 
+Model in this repository use more channels than original residual network.
+
 ## Reference
 
 Model files are the copies of [https://github.com/kuangliu/pytorch-cifar]
